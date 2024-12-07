@@ -75,7 +75,12 @@ export const Login = () => {
                             {load ? <ActivityIndicator color={'#fff'} size={'small'} /> : <Text style={styles.textBtn}>Entrar</Text>}
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.textBottom}>Não tem conta? <Text style={styles.criarConta}>Crie Agora!</Text></Text>
+                    <View style={styles.containerBottom}>
+                        <Text style={styles.textBottom}>
+                            Não tem conta?
+                            <Text style={styles.criarConta}>Crie Agora!</Text>
+                        </Text>
+                    </View>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
