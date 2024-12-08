@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { SplashScreen } from '../pages/splashScreen';
 import { Login } from '../pages/loginScreen';
 import Register from '../pages/RegisterScreen';
-import Home from '../pages/HomeScreen';
+import Home from '../pages/homeScreen';
 import Agenda from '../pages/AgendaScreen';
 import Pesquisar from '../pages/PesquisarScreen';
 import { Temas } from '../global/themes';
