@@ -85,6 +85,11 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     criarConta: {
+        fontSize: 16,
+        fontWeight: 'bold',
         color: Temas.colors.primary,
+    },
+    containerBottom: {
+        flexDirection: 'row',
     }
 })

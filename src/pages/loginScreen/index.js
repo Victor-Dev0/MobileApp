@@ -5,6 +5,8 @@ import logoLogin from '../../../assets/logo.png';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from "./styles";
 import { Temas } from "../../global/themes";
+import { useNavigation } from '@react-navigation/native';
+
 
 export const Login = () => {
     const [email, setEmail] = useState('');
@@ -12,10 +14,15 @@ export const Login = () => {
     const [senhaSegura, setSenhaSegura] = useState(true);
     const [load, setLoad] = useState(false);
     const [icon, setIcon] = useState(false);
+    const navigation = useNavigation();
 
     const trocaIcon = () => {
         setIcon(!icon);
         setSenhaSegura(!senhaSegura);
+    }
+
+    const goRegister = () => {
+        navigation.navigate('Registro');
     }
 
     function getLogin() {
@@ -28,6 +35,7 @@ export const Login = () => {
             setTimeout(() => {
                 Alert.alert('Login!', 'Logado com sucesso!');
                 setLoad(false);
+                navigation.navigate('Home')
             }, 2000);
 
 
@@ -46,7 +54,7 @@ export const Login = () => {
                             style={styles.logoImg}
                             resizeMode="contain"
                         />
-                        <Text style={styles.Titulo}>Bem Vindo a Tela de Login!</Text>
+                        <Text style={styles.Titulo}>Faça Login!</Text>
                     </View>
                     <View style={styles.mid}>
                         <Text style={styles.titleInput}>Endereço de E-Mail</Text>
@@ -76,10 +84,10 @@ export const Login = () => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.containerBottom}>
-                        <Text style={styles.textBottom}>
-                            Não tem conta?
+                        <Text style={styles.textBottom}>Não tem conta?</Text>
+                        <TouchableOpacity activeOpacity={0.5} onPress={goRegister}>
                             <Text style={styles.criarConta}>Crie Agora!</Text>
-                        </Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </TouchableWithoutFeedback>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ActivityIndicator, Alert, Image, Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import logoLogin from '../../../assets/logo.png';
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from '@expo/vector-icons';
-
+import { useNavigation } from '@react-navigation/native';
 import { styles } from "./styles";
 import { Temas } from "../../global/themes";
 
@@ -14,10 +14,15 @@ export default function Register() {
     const [senhaSegura, setSenhaSegura] = useState(true);
     const [load, setLoad] = useState(false);
     const [icon, setIcon] = useState(false);
+    const navigation = useNavigation();
 
     const trocaIcon = () => {
         setIcon(!icon);
         setSenhaSegura(!senhaSegura);
+    }
+
+    const goLogin = () => {
+        navigation.navigate('Login');
     }
 
     function getLogin() {
@@ -55,7 +60,7 @@ export default function Register() {
                         <View style={styles.BoxInput}>
                             <TextInput style={styles.textInput} value={nome} onChangeText={setNome} />
                             <FontAwesome6
-                                name="circle-user"
+                                name="user"
                                 size={20}
                                 color={Temas.colors.black}
                             />
@@ -87,10 +92,10 @@ export default function Register() {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.containerBottom}>
-                        <Text style={styles.textBottom}>
-                            Já tem uma conta?
-                            <Text style={styles.criarConta}>Fazer Login!</Text>
-                        </Text>
+                        <Text style={styles.textBottom}>Já tem uma conta?</Text>
+                        <TouchableOpacity activeOpacity={0.5} onPress={goLogin}>
+                            <Text style={styles.criarConta}>Crie Agora!</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </TouchableWithoutFeedback>

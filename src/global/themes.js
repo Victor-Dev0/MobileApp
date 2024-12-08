@@ -7,5 +7,7 @@ export const Temas = {
         bgScreen: '#ffc8dd',
         bgBoxInput: '#bde0fe',
         black: '#000',
+        bgTabBar: '#FB6F92',
+        tabBarActive: '#E900A3',
     }
 }
