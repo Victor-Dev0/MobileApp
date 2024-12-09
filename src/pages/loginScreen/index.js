@@ -6,6 +6,7 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from "./styles";
 import { Temas } from "../../global/themes";
 import { useNavigation } from '@react-navigation/native';
+import Toast from "react-native-toast-message";
 
 
 export const Login = () => {
@@ -15,6 +16,47 @@ export const Login = () => {
     const [load, setLoad] = useState(false);
     const [icon, setIcon] = useState(false);
     const navigation = useNavigation();
+
+
+    async function Logar({ user, senha }) {
+        const url = `${process.env.EXPO_PUBLIC_API_URL_NOTE}/v1/Login"`;
+        console.log(url)
+        try {
+            setLoad(true);
+            const data = { username: user, password: senha }
+            console.log(JSON.stringify(data))
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!res.ok) {
+                throw new Toast.show({
+                    type: 'error',
+                    text1: 'Falha!',
+                    text2: `${res.status}`
+                });
+            }
+
+            const resData = await res.json();
+            console.log(resData)
+
+            setTimeout(() => {
+                Toast.show({
+                    type: 'success',
+                    text1: 'Sucesso!',
+                    text2: 'Logado com sucesso!',
+                });
+                setLoad(false);
+                navigation.navigate('Home', { usuario: resData })
+            }, 2000);
+        } catch (e) {
+
+        }
+    }
 
     const trocaIcon = () => {
         setIcon(!icon);
@@ -48,6 +90,7 @@ export const Login = () => {
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
+                    <Toast />
                     <View style={styles.top}>
                         <Image
                             source={logoLogin}
@@ -79,7 +122,7 @@ export const Login = () => {
                         </View>
                     </View>
                     <View style={styles.bottom}>
-                        <TouchableOpacity style={styles.button} onPress={() => getLogin()}>
+                        <TouchableOpacity style={styles.button} onPress={() => Logar({ user: email, senha: senha })}>
                             {load ? <ActivityIndicator color={'#fff'} size={'small'} /> : <Text style={styles.textBtn}>Entrar</Text>}
                         </TouchableOpacity>
                     </View>

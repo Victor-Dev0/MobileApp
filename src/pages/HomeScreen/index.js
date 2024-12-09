@@ -4,22 +4,13 @@ import UserCard from '../../components/UserCard';
 import Header from '../../components/Header';
 import { Temas } from '../../global/themes';
 
-//APAGAR ISTO FUTURAMENTE
-//import { API_URL } from '@env';
 
-export default function Home({ username }) {
-
-    async function getUser() {
-        try {
-            const res = await fetch()
-        } catch (e) {
-
-        }
-    }
+export default function Home({ route }) {
+    const { usuario } = route.params;
 
     return (
         <View style={styles.container}>
-            <Header backgroundColor={Temas.colors.bgTabBar} username={'Victor'} />
+            <Header backgroundColor={Temas.colors.bgTabBar} username={usuario.user.username} />
         </View>
     );
 }
