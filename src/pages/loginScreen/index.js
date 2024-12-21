@@ -7,6 +7,7 @@ import { styles } from "./styles";
 import { Temas } from "../../global/themes";
 import { useNavigation } from '@react-navigation/native';
 import Toast from "react-native-toast-message";
+import { useGetData } from '../../services/hooks'
 
 
 export const Login = () => {
@@ -16,45 +17,35 @@ export const Login = () => {
     const [load, setLoad] = useState(false);
     const [icon, setIcon] = useState(false);
     const navigation = useNavigation();
+    const { handleLogin } = useGetData()
 
+    const Logar = async () => {
 
-    async function Logar({ user, senha }) {
-        const url = `${process.env.EXPO_PUBLIC_API_URL_NOTE}/v1/Login"`;
-        console.log(url)
+        if (!email || !senha) {
+            return Alert.alert('Atenção', 'Informe os campos obrigatorios!');
+        }
+
+        setLoad(true)
+
         try {
-            setLoad(true);
-            const data = { username: user, password: senha }
-            console.log(JSON.stringify(data))
-            const res = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data),
-            });
+            const logado = await handleLogin(email, senha)
 
-            if (!res.ok) {
-                throw new Toast.show({
-                    type: 'error',
-                    text1: 'Falha!',
-                    text2: `${res.status}`
-                });
+            if (logado != null || logado != undefined) {
+                console.log(logado)
+                Alert.alert('Login', 'Logado com sucesso!')
+                navigation.navigate('Home', {
+                    screen: 'Inicio',
+                    params: { user: logado }
+                })
             }
-
-            const resData = await res.json();
-            console.log(resData)
-
-            setTimeout(() => {
-                Toast.show({
-                    type: 'success',
-                    text1: 'Sucesso!',
-                    text2: 'Logado com sucesso!',
-                });
-                setLoad(false);
-                navigation.navigate('Home', { usuario: resData })
-            }, 2000);
-        } catch (e) {
-
+            else {
+                setLoad(false)
+                Alert.alert('Erro', 'Ouve um erro no login!')
+            }
+            setLoad(false)
+        } catch (error) {
+            console.error(error)
+            setLoad(false)
         }
     }
 
@@ -77,7 +68,10 @@ export const Login = () => {
             setTimeout(() => {
                 Alert.alert('Login!', 'Logado com sucesso!');
                 setLoad(false);
-                navigation.navigate('Home')
+                navigation.navigate('Home', {
+                    screen: 'Inicio',
+                    params: { nome: 'Hannele', id: 1 },
+                })
             }, 2000);
 
 
@@ -122,7 +116,7 @@ export const Login = () => {
                         </View>
                     </View>
                     <View style={styles.bottom}>
-                        <TouchableOpacity style={styles.button} onPress={() => Logar({ user: email, senha: senha })}>
+                        <TouchableOpacity style={styles.button} onPress={Logar}>
                             {load ? <ActivityIndicator color={'#fff'} size={'small'} /> : <Text style={styles.textBtn}>Entrar</Text>}
                         </TouchableOpacity>
                     </View>

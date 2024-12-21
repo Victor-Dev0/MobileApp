@@ -94,7 +94,7 @@ export default function Register() {
                     <View style={styles.containerBottom}>
                         <Text style={styles.textBottom}>Já tem uma conta?</Text>
                         <TouchableOpacity activeOpacity={0.5} onPress={goLogin}>
-                            <Text style={styles.criarConta}>Crie Agora!</Text>
+                            <Text style={styles.criarConta}>Faça login!</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

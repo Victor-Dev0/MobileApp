@@ -44,7 +44,7 @@ const BottomRoute = () => {
                 }
             })}
         >
-            <Tab.Screen name='Home' component={Home} />
+            <Tab.Screen name='Inicio' component={Home} />
             <Tab.Screen name='Pesquisar' component={Pesquisar} />
             <Tab.Screen name='Agenda' component={Agenda} />
         </Tab.Navigator>
@@ -52,7 +52,7 @@ const BottomRoute = () => {
 }
 
 const routeIcon = {
-    'Home': 'home-outline',
+    'Inicio': 'home-outline',
     'Agenda': 'calendar-outline',
     'Pesquisar': 'search-outline',
 }

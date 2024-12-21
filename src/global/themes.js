@@ -9,5 +9,8 @@ export const Temas = {
         black: '#000',
         bgTabBar: '#FB6F92',
         tabBarActive: '#E900A3',
+        red: '#ff0000',
+        amarelo: '#d9a100',
+        bgUsuario: 'rgba(214,214,214,0.8)'
     }
 }
