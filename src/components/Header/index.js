@@ -1,11 +1,11 @@
-import { View, Text, StatusBar, TouchableOpacity } from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { styles } from './styles';
 import { Temas } from '../../global/themes';
 
 
-export default function Header({ backgroundColor, barStyle = 'light-content', username }) {
+export default function Header({ backgroundColor, barStyle = 'light-content', username, isLoading }) {
     return (
         <SafeAreaView style={[styles.container, { backgroundColor }]}>
             <StatusBar

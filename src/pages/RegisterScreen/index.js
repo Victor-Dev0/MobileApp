@@ -5,6 +5,7 @@ import { MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from '@expo/vecto
 import { useNavigation } from '@react-navigation/native';
 import { styles } from "./styles";
 import { Temas } from "../../global/themes";
+import { useGetData } from '../../services/hooks'
 
 
 export default function Register() {
@@ -14,6 +15,7 @@ export default function Register() {
     const [senhaSegura, setSenhaSegura] = useState(true);
     const [load, setLoad] = useState(false);
     const [icon, setIcon] = useState(false);
+    const { CadastroUsuario } = useGetData()
     const navigation = useNavigation();
 
     const trocaIcon = () => {
@@ -25,21 +27,25 @@ export default function Register() {
         navigation.navigate('Login');
     }
 
-    function getLogin() {
+    const Cadastrar = async () => {
+        if (!nome || !email || !senha) {
+            return Alert.alert('Atenção', 'Informe os campos obrigatorios!');
+        }
+        setLoad(true);
+
         try {
-            if (!email || !senha) {
-                return Alert.alert('Atenção', 'Informe os campos obrigatorios!');
+            const cadastrado = await CadastroUsuario(nome, email, senha);
+
+            if (cadastrado) {
+                Alert.alert("Cadastro", "Usuario cadastrado com sucesso!")
+                setLoad(false)
+
+                navigation.navigate('Login', {
+                    screen: 'Login',
+                })
             }
-            setLoad(true);
-
-            setTimeout(() => {
-                Alert.alert('Registro!', 'Conta registrada com sucesso!');
-                setLoad(false);
-            }, 2000);
-
-
         } catch (error) {
-            console.error(error)
+
         }
     }
 
@@ -87,7 +93,7 @@ export default function Register() {
                         </View>
                     </View>
                     <View style={styles.bottom}>
-                        <TouchableOpacity style={styles.button} onPress={() => getLogin()}>
+                        <TouchableOpacity style={styles.button} onPress={Cadastrar}>
                             {load ? <ActivityIndicator color={'#fff'} size={'small'} /> : <Text style={styles.textBtn}>Criar</Text>}
                         </TouchableOpacity>
                     </View>

@@ -30,8 +30,7 @@ export const Login = () => {
         try {
             const logado = await handleLogin(email, senha)
 
-            if (logado != null || logado != undefined) {
-                console.log(logado)
+            if (logado) {
                 Alert.alert('Login', 'Logado com sucesso!')
                 navigation.navigate('Home', {
                     screen: 'Inicio',
@@ -58,27 +57,27 @@ export const Login = () => {
         navigation.navigate('Registro');
     }
 
-    function getLogin() {
-        try {
-            if (!email || !senha) {
-                return Alert.alert('Atenção', 'Informe os campos obrigatorios!');
-            }
-            setLoad(true);
+    // function getLogin() {
+    //     try {
+    //         if (!email || !senha) {
+    //             return Alert.alert('Atenção', 'Informe os campos obrigatorios!');
+    //         }
+    //         setLoad(true);
 
-            setTimeout(() => {
-                Alert.alert('Login!', 'Logado com sucesso!');
-                setLoad(false);
-                navigation.navigate('Home', {
-                    screen: 'Inicio',
-                    params: { nome: 'Hannele', id: 1 },
-                })
-            }, 2000);
+    //         setTimeout(() => {
+    //             Alert.alert('Login!', 'Logado com sucesso!');
+    //             setLoad(false);
+    //             navigation.navigate('Home', {
+    //                 screen: 'Inicio',
+    //                 params: { nome: 'Hannele', id: 1 },
+    //             })
+    //         }, 2000);
 
 
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>

@@ -2,18 +2,17 @@ import { api } from '../api'
 
 export const useGetData = () => {
 
-    const handleLogin = async (login, senha) => {
+    const handleLogin = async (email, senha) => {
         const data = {
-            username: login,
-            password: senha
+            email: email,
+            senha: senha
         }
         try {
-            const res = await api.post('/User/Login', data, {
+            const res = await api.post('/usuario/login', data, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
             });
-            console.log(res.data)
             return res.data
         } catch (error) {
             console.error(`Erro em handleLogin: ${error}`)
@@ -21,9 +20,28 @@ export const useGetData = () => {
         }
     }
 
+    const CadastroUsuario = async (nome, email, senha) => {
+        const data = {
+            nome: nome,
+            email: email,
+            senha: senha
+        }
+
+        try {
+            const res = await api.post('/usuario/inserir', data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            return res.data
+        } catch (error) {
+            return { error }
+        }
+    }
+
     const getUserInfo = async (idUser) => {
         try {
-            const response = await api.get(`/User/obter?userId=${idUser}`)
+            const response = await api.get(`/usuario/obter?id=${idUser}`)
 
             return response.data
         } catch (error) {
@@ -35,5 +53,6 @@ export const useGetData = () => {
     return {
         handleLogin,
         getUserInfo,
+        CadastroUsuario,
     }
 }
