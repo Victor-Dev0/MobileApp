@@ -30,18 +30,18 @@ export const Login = () => {
         try {
             const logado = await handleLogin(email, senha)
 
-            if (logado) {
+            if (logado.error) {
+                Alert.alert('Erro', 'Houve erro no login')
+            }
+            else {
                 Alert.alert('Login', 'Logado com sucesso!')
                 navigation.navigate('Home', {
                     screen: 'Inicio',
                     params: { user: logado }
                 })
             }
-            else {
-                setLoad(false)
-                Alert.alert('Erro', 'Ouve um erro no login!')
-            }
             setLoad(false)
+
         } catch (error) {
             console.error(error)
             setLoad(false)

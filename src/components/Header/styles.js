@@ -29,4 +29,16 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 44 / 2,
     },
+    iconeUser: {
+        flexDirection: 'row',
+        gap: 10,
+    },
+    addCliente: {
+        width: 44,
+        height: 44,
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 44 / 2,
+    },
 })

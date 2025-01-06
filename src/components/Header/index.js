@@ -1,6 +1,6 @@
 import { View, Text, StatusBar, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { Feather } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { Temas } from '../../global/themes';
 
@@ -16,6 +16,13 @@ export default function Header({ backgroundColor, barStyle = 'light-content', us
             <View style={styles.content}>
                 <Text style={styles.txtUser}>Olá, {username}</Text>
                 <View style={styles.iconeUser}>
+                    <TouchableOpacity style={styles.addCliente} activeOpacity={0.5}>
+                        <Ionicons
+                            name='add-circle'
+                            size={32}
+                            color={Temas.colors.secondary}
+                        />
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.bgUser} activeOpacity={0.5}>
                         <Feather
                             name='user'

@@ -11,15 +11,13 @@ import { useNavigation } from '@react-navigation/native';
 export default function Home({ route }) {
     const { getUserInfo } = useGetData()
     const [userLogado, setUserLogado] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
     const navigation = useNavigation()
 
     const user = route.params.user;
 
-    console.log(user)
     return (
         <View style={styles.container}>
-            <Header backgroundColor={Temas.colors.bgTabBar} username={user.nome} isLoading={isLoading} />
+            <Header backgroundColor={Temas.colors.bgTabBar} username={user.nome} />
             <ScrollView style={styles.scroll}>
                 <View>
                     <ClientCard />
