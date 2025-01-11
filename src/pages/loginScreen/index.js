@@ -8,7 +8,7 @@ import { Temas } from "../../global/themes";
 import { useNavigation } from '@react-navigation/native';
 import Toast from "react-native-toast-message";
 import { useGetData } from '../../services/hooks'
-
+import { useUserStorage } from "../../services/storage/dataStorage";
 
 export const Login = () => {
     const [email, setEmail] = useState('');
@@ -18,6 +18,7 @@ export const Login = () => {
     const [icon, setIcon] = useState(false);
     const navigation = useNavigation();
     const { handleLogin } = useGetData()
+    const { setUserId } = useUserStorage()
 
     const Logar = async () => {
 
@@ -35,6 +36,8 @@ export const Login = () => {
             }
             else {
                 Alert.alert('Login', 'Logado com sucesso!')
+
+                setUserId(logado.id)
                 navigation.navigate('Home', {
                     screen: 'Inicio',
                     params: { user: logado }

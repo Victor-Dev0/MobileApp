@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         height: Dimensions.get("window").height / 9,
         width: Dimensions.get("window").width / 1.1,
         backgroundColor: Temas.colors.secondary,
-        marginStart: 20,
+        marginStart: 10,
         alignItems: 'center',
         backgroundColor: Temas.colors.bgTabBar,
         borderRadius: 20,

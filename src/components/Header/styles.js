@@ -41,4 +41,16 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 44 / 2,
     },
+    txtBusca: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: Temas.colors.secondary,
+        paddingBottom: 5,
+    },
+    topContent: {
+        flex: 1,
+        alignItems: 'flex-end',
+        flexDirection: 'row',
+        paddingBottom: Platform.OS === 'ios' ? 0 : 20
+    },
 })
