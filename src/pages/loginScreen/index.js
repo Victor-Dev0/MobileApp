@@ -60,28 +60,6 @@ export const Login = () => {
         navigation.navigate('Registro');
     }
 
-    // function getLogin() {
-    //     try {
-    //         if (!email || !senha) {
-    //             return Alert.alert('Atenção', 'Informe os campos obrigatorios!');
-    //         }
-    //         setLoad(true);
-
-    //         setTimeout(() => {
-    //             Alert.alert('Login!', 'Logado com sucesso!');
-    //             setLoad(false);
-    //             navigation.navigate('Home', {
-    //                 screen: 'Inicio',
-    //                 params: { nome: 'Hannele', id: 1 },
-    //             })
-    //         }, 2000);
-
-
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }
-
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

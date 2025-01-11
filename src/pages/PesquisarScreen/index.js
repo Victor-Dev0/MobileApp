@@ -17,7 +17,7 @@ export default function Pesquisar() {
 
     return (
         <View style={styles.container}>
-            <Header backgroundColor={Temas.colors.bgTabBar} username={''} isHome={false} />
+            <Header backgroundColor={Temas.colors.bgTabBar} text={'Procure pelo Cliente'} isHome={false} />
             <View style={styles.topBox}>
                 <View style={styles.BoxInput}>
                     <TextInput style={styles.textInput} />

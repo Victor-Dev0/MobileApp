@@ -5,7 +5,7 @@ import { styles } from './styles';
 import { Temas } from '../../global/themes';
 
 
-export default function Header({ backgroundColor, barStyle = 'light-content', username, isHome }) {
+export default function Header({ backgroundColor, barStyle = 'light-content', username, isHome, text }) {
     return (
         <SafeAreaView style={[styles.container, { backgroundColor }]}>
             <StatusBar
@@ -35,7 +35,7 @@ export default function Header({ backgroundColor, barStyle = 'light-content', us
                 </View>
             ) : (
                 <View style={styles.topContent}>
-                    <Text style={styles.txtBusca}>Procure pelo Cliente</Text>
+                    <Text style={styles.txtBusca}>{text}</Text>
 
                 </View>
             )}
