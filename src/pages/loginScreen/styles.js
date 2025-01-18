@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        zIndex: 0,
     },
     mid: {
         height: Dimensions.get('window').height / 4,
@@ -90,5 +91,5 @@ export const styles = StyleSheet.create({
     },
     containerBottom: {
         flexDirection: 'row',
-    }
+    },
 })

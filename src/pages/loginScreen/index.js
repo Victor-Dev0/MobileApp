@@ -6,9 +6,10 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from "./styles";
 import { Temas } from "../../global/themes";
 import { useNavigation } from '@react-navigation/native';
-import Toast from "react-native-toast-message";
+import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
 import { useGetData } from '../../services/hooks'
 import { useUserStorage } from "../../services/storage/dataStorage";
+import { LoadComponent } from "../../components/LoadComponent";
 
 export const Login = () => {
     const [email, setEmail] = useState('');
@@ -19,6 +20,38 @@ export const Login = () => {
     const navigation = useNavigation();
     const { handleLogin } = useGetData()
     const { setUserId } = useUserStorage()
+
+    const toastConfig = {
+        success: (props) => (
+            <BaseToast
+                {...props}
+                style={{ borderLeftColor: 'green' }}
+                contentContainerStyle={{ paddingHorizontal: 15 }}
+                text1Style={{
+                    fontSize: 18,
+                    color: Temas.colors.black,
+                    fontWeight: 'bold'
+                }}
+            />
+        ),
+
+        error: (props) => (
+            <ErrorToast
+                {...props}
+                style={{ borderLeftColor: 'red' }}
+                contentContainerStyle={{ paddingHorizontal: 15 }}
+                text1Style={{
+                    fontSize: 18,
+                    color: Temas.colors.black,
+                    fontWeight: 'bold'
+                }}
+                text2Style={{
+                    fontSize: 15,
+                    color: Temas.colors.black,
+                }}
+            />
+        )
+    }
 
     const Logar = async () => {
 
@@ -32,7 +65,12 @@ export const Login = () => {
             const logado = await handleLogin(email, senha)
 
             if (logado.error) {
-                Alert.alert('Erro', 'Houve erro no login')
+                //Alert.alert('Erro', 'Houve erro no login')
+                Toast.show({
+                    text1: "Erro!",
+                    text2: `${logado.error.message}`,
+                    type: 'error',
+                });
             }
             else {
                 Alert.alert('Login', 'Logado com sucesso!')
@@ -64,7 +102,6 @@ export const Login = () => {
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
-                    <Toast />
                     <View style={styles.top}>
                         <Image
                             source={logoLogin}
@@ -106,6 +143,7 @@ export const Login = () => {
                             <Text style={styles.criarConta}>Crie Agora!</Text>
                         </TouchableOpacity>
                     </View>
+                    <Toast config={toastConfig} />
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
