@@ -45,7 +45,7 @@ export default function Register() {
                 })
             }
         } catch (error) {
-            console.log(error)
+            return Alert.alert('Erro', 'Erro ao cadastrar o usuario')
         }
     }
 

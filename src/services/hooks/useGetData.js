@@ -20,6 +20,24 @@ export const useGetData = () => {
         }
     }
 
+    const CadastraCliente = async (nome, telefone, userId) => {
+        const data = {
+            nome: nome,
+            telefone: telefone,
+            usuarioId: userId
+        }
+
+        try {
+            const res = await api.post('/cliente/inserir', data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            return res
+        } catch (err) {
+            return { err }
+        }
+    }
     const CadastroUsuario = async (nome, email, senha) => {
         const data = {
             nome: nome,
@@ -54,5 +72,6 @@ export const useGetData = () => {
         handleLogin,
         getUserInfo,
         CadastroUsuario,
+        CadastraCliente,
     }
 }

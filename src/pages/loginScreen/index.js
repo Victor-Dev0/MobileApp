@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { ActivityIndicator, Alert, Image, Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import logoLogin from '../../../assets/logo.png';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -10,6 +9,7 @@ import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
 import { useGetData } from '../../services/hooks'
 import { useUserStorage } from "../../services/storage/dataStorage";
 import { LoadComponent } from "../../components/LoadComponent";
+import { SalvarUsuario } from "../../services/storage/storage";
 
 export const Login = () => {
     const [email, setEmail] = useState('');
@@ -73,9 +73,14 @@ export const Login = () => {
                 });
             }
             else {
-                Alert.alert('Login', 'Logado com sucesso!')
+                //Alert.alert('Login', 'Logado com sucesso!')
+                Toast.show({
+                    text1: "Sucesso!",
+                    text2: "Logado com sucesso!",
+                    type: 'success',
+                })
 
-                setUserId(logado.id)
+                SalvarUsuario(JSON.stringify(logado))
                 navigation.navigate('Home', {
                     screen: 'Inicio',
                     params: { user: logado }

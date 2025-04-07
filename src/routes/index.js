@@ -11,6 +11,7 @@ import Agenda from '../pages/AgendaScreen';
 import Pesquisar from '../pages/PesquisarScreen';
 import { Temas } from '../global/themes';
 import Detalhes from '../pages/Detalhes';
+import CadastroCliente from '../pages/cadastroCliente';
 
 
 export const Routes = () => {
@@ -23,6 +24,7 @@ export const Routes = () => {
                 <Stack.Screen name='Login' component={Login} />
                 <Stack.Screen name='Registro' component={Register} />
                 <Stack.Screen name='Detalhes' component={Detalhes} />
+                <Stack.Screen name='RegistroCliente' component={CadastroCliente} />
                 <Stack.Screen name='Home' component={BottomRoute} />
             </Stack.Navigator>
         </NavigationContainer>

@@ -3,9 +3,16 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { Temas } from '../../global/themes';
+import { useNavigation } from '@react-navigation/native';
 
 
-export default function Header({ backgroundColor, barStyle = 'light-content', username, isHome, text }) {
+export default function Header({ backgroundColor, barStyle = 'light-content', username, isHome, text, userId }) {
+    const navigation = useNavigation()
+    const id = userId;
+    const navegarCadastroCliente = (nomeTela) => {
+        navigation.navigate(nomeTela, { user: userId })
+    }
+
     return (
         <SafeAreaView style={[styles.container, { backgroundColor }]}>
             <StatusBar
@@ -17,7 +24,7 @@ export default function Header({ backgroundColor, barStyle = 'light-content', us
                 <View style={styles.content}>
                     <Text style={styles.txtUser}>Olá, {username}</Text>
                     <View style={styles.iconeUser}>
-                        <TouchableOpacity style={styles.addCliente} activeOpacity={0.5}>
+                        <TouchableOpacity style={styles.addCliente} activeOpacity={0.5} onPress={() => navegarCadastroCliente('RegistroCliente')}>
                             <Ionicons
                                 name='add-circle'
                                 size={32}
