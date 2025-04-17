@@ -1,35 +1,61 @@
-import React, { useState, useEffect } from "react";
-import { ScrollView, Text, View } from 'react-native';
+import React, { useState, useEffect, createContext, useCallback } from "react";
+import { FlatList, ScrollView, View } from 'react-native';
 import { styles } from './styles';
 import ClientCard from '../../components/ClienteCard';
 import Header from '../../components/Header';
 import { Temas } from '../../global/themes';
-import { useGetData } from '../../services/hooks';
-import { useNavigation } from '@react-navigation/native';
-import { CarregarUsuario } from "../../services/storage/storage";
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { dbService } from "../../data/dbService";
 
 export default function Home({ route }) {
+    const Context = createContext();
     const navigation = useNavigation()
-    const [usuario, setUsuario] = useState()
+    const [clientes, setClientes] = useState([])
+    const [load, setLoad] = useState(false)
     const { user } = route.params
+    const { ObtemTodosClientes } = dbService();
 
-    const receber = () => {
-        CarregarUsuario().then((usuario) => setUsuario(usuario))
+    const obtemClientes = async () => {
+
+        const cliente = await ObtemTodosClientes();
+        if (cliente) {
+            setClientes(cliente)
+        }
     }
 
-    useEffect(() => {
-        receber
-        //console.log(usuario)
-    }, [])
+    useFocusEffect(
+        useCallback(() => {
+            obtemClientes();
+        }, []))
+
+
+    if (!user || !clientes) {
+        return (
+            <View style={styles.container}>
+                <Header backgroundColor={Temas.colors.bgTabBar} username={"Carregando..."} isHome={true} />
+                <ScrollView style={styles.scroll}>
+                    <View>
+                        <ActivityIndicator color={'#fff'} size={'small'} />
+                    </View>
+                </ScrollView>
+            </View>
+        )
+    }
 
     return (
         <View style={styles.container}>
             <Header backgroundColor={Temas.colors.bgTabBar} username={user.nome} isHome={true} userId={user.id} />
-            <ScrollView style={styles.scroll}>
-                <View>
-
-                </View>
-            </ScrollView>
+            <View style={styles.listaCliente}>
+                <FlatList
+                    data={clientes}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <ClientCard cliente={item} isHome={true} />
+                    )}
+                    refreshing={load}
+                    onRefresh={obtemClientes}
+                />
+            </View>
         </View>
     );
 }

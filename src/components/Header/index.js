@@ -47,6 +47,7 @@ export default function Header({ backgroundColor, barStyle = 'light-content', us
                 </View>
             )}
 
+
         </SafeAreaView>
     );
 }

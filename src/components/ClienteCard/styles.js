@@ -15,7 +15,6 @@ export const styles = StyleSheet.create({
         marginTop: 12,
         gap: 10,
         paddingStart: 15,
-        paddingEnd: 15,
     },
     bgUser: {
         width: 54,
@@ -27,7 +26,8 @@ export const styles = StyleSheet.create({
     },
     clinteInfo: {
         flex: 1,
-        paddingStart: 12,
+        // paddingStart: 12,
+        marginLeft: 20,
     },
     clientName: {
         fontSize: 18,
@@ -42,9 +42,8 @@ export const styles = StyleSheet.create({
         backgroundColor: Temas.colors.bgUsuario,
     },
     btnContainer: {
-        flex: 1,
         flexDirection: 'row',
         gap: 10,
-        paddingStart: 30,
+        marginRight: 30,
     }
 })

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import { ActivityIndicator, Alert, Image, Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import logoLogin from '../../../assets/logo.png';
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from '@expo/vector-icons';
@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { styles } from "./styles";
 import { Temas } from "../../global/themes";
 import { useGetData } from '../../services/hooks'
+import { dbService } from "../../data/dbService";
 
 
 export default function Register() {
@@ -17,6 +18,8 @@ export default function Register() {
     const [icon, setIcon] = useState(false);
     const { CadastroUsuario } = useGetData()
     const navigation = useNavigation();
+    const Context = createContext();
+    const { Leitura, CriarUsuario } = dbService();
 
     const trocaIcon = () => {
         setIcon(!icon);
@@ -34,7 +37,7 @@ export default function Register() {
         setLoad(true);
 
         try {
-            const cadastrado = await CadastroUsuario(nome, email, senha);
+            const cadastrado = await CriarUsuario(nome, email, senha);
 
             if (cadastrado) {
                 Alert.alert("Cadastro", "Usuario cadastrado com sucesso!")

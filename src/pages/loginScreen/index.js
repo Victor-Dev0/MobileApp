@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import { ActivityIndicator, Alert, Image, Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import logoLogin from '../../../assets/logo.png';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -10,16 +10,20 @@ import { useGetData } from '../../services/hooks'
 import { useUserStorage } from "../../services/storage/dataStorage";
 import { LoadComponent } from "../../components/LoadComponent";
 import { SalvarUsuario } from "../../services/storage/storage";
+import { dbService } from "../../data/dbService";
 
 export const Login = () => {
+    const Context = createContext();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [senhaSegura, setSenhaSegura] = useState(true);
     const [load, setLoad] = useState(false);
     const [icon, setIcon] = useState(false);
     const navigation = useNavigation();
-    const { handleLogin } = useGetData()
-    const { setUserId } = useUserStorage()
+    const { handleLogin } = useGetData();
+    const { setUserId } = useUserStorage();
+    const { LoginTela } = dbService();
+
 
     const toastConfig = {
         success: (props) => (
@@ -62,29 +66,29 @@ export const Login = () => {
         setLoad(true)
 
         try {
-            const logado = await handleLogin(email, senha)
+            const logado = await LoginTela(email, senha)
 
-            if (logado.error) {
-                //Alert.alert('Erro', 'Houve erro no login')
+            if (!logado) {
                 Toast.show({
                     text1: "Erro!",
-                    text2: `${logado.error.message}`,
+                    text2: "Email ou Senha incorretos!",
                     type: 'error',
                 });
             }
             else {
-                //Alert.alert('Login', 'Logado com sucesso!')
-                Toast.show({
-                    text1: "Sucesso!",
-                    text2: "Logado com sucesso!",
-                    type: 'success',
-                })
-
-                SalvarUsuario(JSON.stringify(logado))
-                navigation.navigate('Home', {
-                    screen: 'Inicio',
-                    params: { user: logado }
-                })
+                if (logado.senha === senha) {
+                    //await SalvarUsuario(JSON.stringify(logado))
+                    navigation.navigate('Home', {
+                        screen: 'Inicio',
+                        params: { user: logado }
+                    })
+                } else {
+                    Toast.show({
+                        text1: "Erro!",
+                        text2: "Senha incorreta!",
+                        type: 'error',
+                    })
+                }
             }
             setLoad(false)
 
@@ -104,7 +108,7 @@ export const Login = () => {
     }
 
     return (
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+        <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
                     <View style={styles.top}>

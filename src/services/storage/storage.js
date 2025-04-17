@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 
 export const SalvarUsuario = async (valor) => {
     try {
-        await AsyncStorage.setItem("Usuario", valor).then(Alert.alert('Sucesso', 'Usuario salvo!'))
+        await AsyncStorage.setItem("Usuario", valor).then(Alert.alert('Sucesso', `Usuario salvo`))
     } catch (error) {
         return { error }
     }
@@ -11,11 +11,10 @@ export const SalvarUsuario = async (valor) => {
 
 export const CarregarUsuario = async () => {
     try {
-        let jsonValue = await AsyncStorage.getItem("Usuario").then(Alert.alert('Sucesso', 'Usuario Buscado!'))
-        console.log(jsonValue)
-
+        const jsonValue = await AsyncStorage.getItem("Usuario").then(Alert.alert('Sucesso', 'Usuario Buscado!'))
+        //console.log(jsonValue)
         if (jsonValue !== null) {
-            return JSON.parse(jsonValue)
+            return jsonValue
         }
     } catch (error) {
         return { error }

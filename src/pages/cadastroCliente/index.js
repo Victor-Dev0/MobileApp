@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import { ActivityIndicator, Alert, Image, Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import logoLogin from '../../../assets/logo.png'
-import { MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome6 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './styles'
 import { Temas } from "../../global/themes";
 import { useGetData } from '../../services/hooks'
+import { dbService } from "../../data/dbService";
+import { TextInputMask } from "react-native-masked-text";
 
 
 const CadastroCliente = ({ route }) => {
+    const Context = createContext();
     const navigation = useNavigation()
     const [telefone, setTelefone] = useState('');
     const [nome, setNome] = useState('');
     const [load, setLoad] = useState(false);
     const { CadastraCliente } = useGetData()
     const { user } = route.params
+    const { CriarCliente } = dbService();
 
     const CadastrarCliente = async () => {
         if (!nome || !telefone || !user) {
@@ -23,15 +27,16 @@ const CadastroCliente = ({ route }) => {
         setLoad(true)
 
         try {
-            const cadastrado = await CadastraCliente(nome, telefone, user)
+            const cadastrado = await CriarCliente(nome, telefone, user)
             if (cadastrado) {
                 Alert.alert('Sucesso', 'Cliente cadastrado com sucesso!')
                 setLoad(false)
 
-                navigation.navigate('Home')
+                navigation.goBack()
             }
         } catch (error) {
             Alert.alert('Erro', `Erro ao cadastrar cliente: ${error}`)
+            setLoad(false)
         }
     }
 
@@ -59,7 +64,21 @@ const CadastroCliente = ({ route }) => {
                         </View>
                         <Text style={styles.titleInput}>Telefone</Text>
                         <View style={styles.BoxInput}>
-                            <TextInput style={styles.textInput} value={telefone} onChangeText={setTelefone} />
+                            <TextInputMask
+                                type={'cel-phone'}
+                                style={styles.textInput}
+                                value={telefone}
+                                onChangeText={setTelefone}
+                                placeholder="(37) 99999-9999"
+                                keyboardType="phone-pad"
+                                options={{
+                                    maskType: 'BRL',
+                                    withDDD: true,
+                                    dddMask: '(99)'
+                                }}
+
+
+                            />
                             <MaterialIcons
                                 name="phone"
                                 size={20}

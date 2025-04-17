@@ -5,6 +5,7 @@ import { styles } from './styles';
 import Header from '../../components/Header';
 import { Temas } from "../../global/themes";
 import { useNavigation } from '@react-navigation/native';
+import HeaderAgenda from '../../components/Header/headerAgenda';
 
 LocaleConfig.locales["pt-br"] = ptBR
 LocaleConfig.defaultLocale = "pt-br"
@@ -20,7 +21,7 @@ export default function Agenda() {
 
     return (
         <View style={styles.container}>
-            <Header backgroundColor={Temas.colors.bgTabBar} isHome={false} text={"Calendário"} />
+            <HeaderAgenda backgroundColor={Temas.colors.bgTabBar} text={"Agenda"} />
 
             <View style={styles.calendarBox}>
                 <Calendar

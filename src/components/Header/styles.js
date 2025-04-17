@@ -53,4 +53,19 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingBottom: Platform.OS === 'ios' ? 0 : 20
     },
+    TopAgenda: {
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginRight: 10
+    },
+    addAgendamento: {
+        width: 44,
+        height: 44,
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 44 / 2,
+    }
 })
