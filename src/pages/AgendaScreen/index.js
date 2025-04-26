@@ -6,15 +6,20 @@ import Header from '../../components/Header';
 import { Temas } from "../../global/themes";
 import { useNavigation } from '@react-navigation/native';
 import HeaderAgenda from '../../components/Header/headerAgenda';
+import { createContext } from 'react';
+import { dbService } from '../../data/dbService';
+import moment from 'moment';
 
 LocaleConfig.locales["pt-br"] = ptBR
 LocaleConfig.defaultLocale = "pt-br"
 
 export default function Agenda() {
+    const context = createContext();
     const navigation = useNavigation()
+    const { BuscaAgendamentoPorData } = dbService();
 
     const navegarDetalhesDia = (dia) => {
-        const dataClicada = dia;
+        const dataClicada = moment(dia.dateString).format('DD/MM/YYYY')
 
         navigation.navigate('Detalhes', { data: JSON.stringify(dataClicada) })
     }

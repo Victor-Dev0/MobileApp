@@ -13,13 +13,12 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-end',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingBottom: Platform.OS === 'ios' ? 0 : 20
+        paddingBottom: Platform.OS === 'ios' ? 0 : 15
     },
     txtUser: {
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: 'bold',
         color: Temas.colors.secondary,
-        paddingBottom: 5,
     },
     bgUser: {
         width: 44,

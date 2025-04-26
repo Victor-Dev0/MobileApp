@@ -63,7 +63,7 @@ export default function Pesquisar() {
                     data={clientes}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <ClientCard cliente={item} isHome={false} />
+                        <ClientCard cliente={item} isHome={false} pesquisa={true} />
                     )}
                     hasSearched={hasSearched}
                 />

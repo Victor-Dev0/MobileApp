@@ -1,10 +1,10 @@
-import { View, Text, Alert, Button } from 'react-native'
+import { View, Text, Alert, Button, TouchableOpacity } from 'react-native'
 import Header from "../../components/Header";
 import { Temas } from '../../global/themes';
 import React, { createContext, useCallback, useEffect, useState } from 'react'
 import { styles } from './styles';
 import { dbService } from '../../data/dbService';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import DropdownComponente from '../../components/Dropdown';
 import EscolhaHorario from '../../components/HorarioModal';
 import DataModal from '../../components/DataModal';
@@ -16,7 +16,8 @@ const Agendamento = () => {
     const [servico, setServico] = useState()
     const [clientes, setClientes] = useState([])
     const [data, setData] = useState(null)
-    const { ObtemTodosClientes } = dbService();
+    const navigation = useNavigation()
+    const { ObtemTodosClientes, InserirAgendamento, PrimeiroAgendamento } = dbService();
 
     const servicos = [
         { key: '1', nome: 'Esmaltação' },
@@ -31,8 +32,24 @@ const Agendamento = () => {
         }
     }
 
-    const agendar = () => {
-        Alert.alert('Dados', `${data} => ${horaSelecionada.hora}:${horaSelecionada.minuto}`)
+    const agendar = async () => {
+        const hora = `${horaSelecionada.hora.padStart(2, '0')}:${horaSelecionada.minuto.padStart(2, '0')}`
+        try {
+            const res = await InserirAgendamento(clienteEscolhido.nome, clienteEscolhido.id, data, hora, servico.nome)
+
+            if (res) {
+                const verAgendamento = await PrimeiroAgendamento();
+                Alert.alert('Agendado!', 'Cliente agendado com sucesso!')
+                navigation.goBack()
+            } else {
+                throw new Error("Erro ao inserir agendamento")
+            }
+
+        } catch (error) {
+            Alert.alert('Erro!', error.message)
+        }
+        // const res = await PrimeiroAgendamento();
+        // console.log(res)
     }
 
     useFocusEffect(
@@ -44,16 +61,20 @@ const Agendamento = () => {
         <View style={styles.container}>
             <Header backgroundColor={Temas.colors.bgTabBar} text={'Agendar Cliente'} />
 
-            <DropdownComponente data={clientes} placeholder={'Escolha o Cliente'} search={true} />
+            <DropdownComponente data={clientes} placeholder={'Escolha o Cliente'} search={true} cliente={clienteEscolhido} setCliente={setclienteEscolhido} />
 
-            <DropdownComponente data={servicos} />
+            <DropdownComponente data={servicos} servico={servico} setServico={setServico} />
 
 
             <EscolhaHorario mudanca={setHoraSelecionada} />
             <DataModal mudanca={setData} />
 
-            <Button title='Mostra' onPress={agendar} />
-            {/* Botao agendar */}
+            <View style={styles.searchBox}>
+                <TouchableOpacity style={styles.btnSearch} onPress={agendar}>
+                    <Text style={styles.txtInp}>Agendar</Text>
+                </TouchableOpacity>
+            </View>
+
         </View>
     )
 }

@@ -63,6 +63,48 @@ export function dbService() {
         }
     }
 
+    async function InserirAgendamento(nome, clienteId, data, hora, servico,) {
+        try {
+            const result = await database.runAsync('INSERT INTO agendamentos (nome, clienteId, data, hora, servico) VALUES (?, ?, ?, ?, ?);',
+                [nome, clienteId, data, hora, servico]);
+
+            return true
+        } catch (error) {
+            console.error(error)
+
+            return false
+        }
+    }
+
+    async function PrimeiroAgendamento() {
+        try {
+            const result = await database.getAllAsync('SELECT * FROM agendamentos');
+            // const result = await database.runAsync('DELETE FROM agendamentos');
+
+            return result
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    async function BuscaAgendamentoPorData(data) {
+        try {
+            const result = await database.getAllAsync(`
+                SELECT c.nome, c.telefone, a.hora
+                FROM clientes c 
+                JOIN agendamentos a on c.id = a.clienteId
+                WHERE data = ?
+                ORDER BY c.nome,
+                         c.telefone,
+                         a.hora
+                `, [data]);
+
+            return result
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return {
         CriarUsuario,
         LoginTela,
@@ -70,5 +112,8 @@ export function dbService() {
         ObtemTodosClientes,
         ApagarCliente,
         BuscarClientes,
+        InserirAgendamento,
+        PrimeiroAgendamento,
+        BuscaAgendamentoPorData,
     }
 }

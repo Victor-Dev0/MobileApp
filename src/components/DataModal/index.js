@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import { View, Button, Text, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { styles } from './styles';
+import moment from 'moment';
 
 export default function DataModal({ mudanca }) {
     const [mostrarPicker, setMostrarPicker] = useState(false);
     const [modo, setModo] = useState('date')
     const [dataAtual, setdataAtual] = useState(new Date());
+    const [dataFormatada, setDataFormatada] = useState()
 
     const onChange = (event, selectedDate) => {
         setMostrarPicker(Platform.OS === 'ios')
         if (selectedDate) {
             const currentDate = selectedDate
-            setdataAtual(currentDate);
-            mudanca(currentDate)
+
+            const dataFormatada = moment(currentDate).format('DD/MM/YYYY')
+
+            setDataFormatada(dataFormatada);
+            mudanca(dataFormatada)
         }
     };
 
@@ -31,7 +36,7 @@ export default function DataModal({ mudanca }) {
             </View>
             <View>
                 <Text style={styles.selecionados}>
-                    {dataAtual.getDate().toString().padStart(2, '0')}/{(dataAtual.getMonth() + 1).toString().padStart(2, '0')}/{dataAtual.getFullYear().toString().padStart(2, '0')}
+                    {dataFormatada}
                 </Text>
             </View>
 

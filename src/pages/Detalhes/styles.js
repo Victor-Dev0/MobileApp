@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { Temas } from "../../global/themes";
 
 export const styles = StyleSheet.create({
@@ -8,6 +8,9 @@ export const styles = StyleSheet.create({
         backgroundColor: Temas.colors.bgScreen,
     },
     searchBox: {
+        marginTop: 5,
+        marginBottom: Platform.OS === 'ios' ? 50 : 15,
+        marginLeft: 15,
         flex: 0,
         flexDirection: 'row',
         width: '25%',
@@ -34,4 +37,8 @@ export const styles = StyleSheet.create({
         color: Temas.colors.secondary,
         fontWeight: 'bold',
     },
+    boxBtns: {
+        display: 'flex',
+        flexDirection: 'row'
+    }
 })

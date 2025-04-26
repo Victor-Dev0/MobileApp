@@ -22,7 +22,11 @@ export default function Header({ backgroundColor, barStyle = 'light-content', us
             />
             {isHome ? (
                 <View style={styles.content}>
-                    <Text style={styles.txtUser}>Olá, {username}</Text>
+                    <View>
+                        <Text style={styles.txtUser}>Olá, {username}</Text>
+                        <Text style={styles.txtUser}>Agendamentos de Hoje</Text>
+                    </View>
+
                     <View style={styles.iconeUser}>
                         <TouchableOpacity style={styles.addCliente} activeOpacity={0.5} onPress={() => navegarCadastroCliente('RegistroCliente')}>
                             <Ionicons
