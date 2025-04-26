@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { View, Button, Text, TouchableOpacity } from 'react-native';
+import { View, Button, Text, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { styles } from './styles';
 
 export default function DataModal({ mudanca }) {
     const [mostrarPicker, setMostrarPicker] = useState(false);
+    const [modo, setModo] = useState('date')
     const [dataAtual, setdataAtual] = useState(new Date());
 
     const onChange = (event, selectedDate) => {
-        setMostrarPicker(false);
+        setMostrarPicker(Platform.OS === 'ios')
         if (selectedDate) {
             const currentDate = selectedDate
             setdataAtual(currentDate);
@@ -16,10 +17,15 @@ export default function DataModal({ mudanca }) {
         }
     };
 
+    const mostrarModo = (modoAtual) => {
+        setMostrarPicker(true)
+        setModo(modoAtual)
+    }
+
     return (
         <View style={{ padding: 10 }}>
             <View style={styles.searchBox}>
-                <TouchableOpacity style={styles.btnSearch} onPress={() => setMostrarPicker(true)}>
+                <TouchableOpacity style={styles.btnSearch} onPress={() => mostrarModo('date')}>
                     <Text style={styles.txtInp}>Escolher Data</Text>
                 </TouchableOpacity>
             </View>
@@ -32,9 +38,10 @@ export default function DataModal({ mudanca }) {
             {mostrarPicker && (
                 <DateTimePicker
                     value={dataAtual}
-                    mode="date"
-                    display='default'
+                    mode={modo}
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     onChange={onChange}
+                    is24Hour={true}
                 />
             )}
         </View>

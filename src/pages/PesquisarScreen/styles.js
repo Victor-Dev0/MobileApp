@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
         flex: 0,
         width: '100%',
         height: 50,
-        paddingHorizontal: 19,
+        paddingHorizontal: 15,
     },
     txtInp: {
         color: Temas.colors.secondary,
